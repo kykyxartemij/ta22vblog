@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html data-theme="dracula" lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    @vite('resources/css/app.css')
-</head>
-
-<body>
+@extends('partials.layout')
+@section('title', 'Home')
+@section('content')
     <div class="container mx-auto">
         <div class="my-2 flex justify-center">
             {{ $posts->links() }}
@@ -26,7 +17,7 @@
                             <h2 class="card-title">{{ $post->title }}</h2>
                             <p>{{ $post->snippet }}</p>
                             <div class="card-actions justify-end">
-                                <button class="btn btn-primary">Buy Now</button>
+                                <a href="{{ route('post', ['post' => $post]) }}" class="btn btn-primary">Read more</a>
                             </div>
                         </div>
                     </div>
@@ -34,6 +25,4 @@
             @endforeach
         </div>
     </div>
-</body>
-
-</html>
+@endsection
