@@ -38,7 +38,7 @@
           <details>
             <summary>Admin</summary>
             <ul class="p-2">
-              <li><a>Posts</a></li>
+              <li><a href="{{route('posts.index')}}">Posts</a></li>
             </ul>
           </details>
         </li>

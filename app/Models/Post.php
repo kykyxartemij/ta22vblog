@@ -15,9 +15,9 @@ class Post extends Model
     // }
 
     public function snippet(): Attribute {
-        return Attribute::get(fn () => explode("\n\n", $this->original['body'])[0]);
+        return Attribute::get(fn () => explode("\n\n", $this->body)[0]);
     }
-    public function body(): Attribute {
+    public function displayBody(): Attribute {
         return Attribute::get(fn ($value) => nl2br($value));
     }
 }
