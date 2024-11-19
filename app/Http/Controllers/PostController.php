@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -33,6 +34,9 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        if($request->has('image')){
+            $post->image = $request->file('image')->store('', ['disk' => 'public']);
+        }
         $post->save();
         return redirect()->route('posts.index');
     }
@@ -69,6 +73,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
         $post->delete();
         return redirect()->back();
     }
