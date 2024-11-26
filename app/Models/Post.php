@@ -30,6 +30,10 @@ class Post extends Model
         });
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     protected static function booted(): void
     {
         static::deleting(function (Post $post) {
