@@ -5,16 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $post = $request->route()->parameter('post');
+        if($post){
+            if(auth()->user()->id !== $post->user->id){
+                abort(404);
+            }
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::latest()->paginate();
+        $posts = auth()->user()->posts()->latest()->paginate();
         return view('posts.index', compact('posts'));
     }
 

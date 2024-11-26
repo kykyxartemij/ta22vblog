@@ -30,8 +30,29 @@ class Post extends Model
         });
     }
 
+    public function authHasLiked(): Attribute {
+        return Attribute::get(function (){
+            if(!auth()->check()){
+                return false;
+            }
+            return $this->likes()->where('user_id', auth()->user()->id)->exists();
+        });
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
     }
 
     protected static function booted(): void
