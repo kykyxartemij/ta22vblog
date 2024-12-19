@@ -9,6 +9,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Models\Comment;
 
 class PublicController extends Controller
 {
@@ -37,5 +38,9 @@ class PublicController extends Controller
     public function tag(Tag $tag){
         $posts = $tag->posts()->with('user')->withCount('comments', 'likes')->latest()->simplePaginate(16);
         return view('welcome', compact('posts'));
+    }
+
+    public function comment(Comment $comment){
+        return view('comment', compact('comment'));
     }
 }

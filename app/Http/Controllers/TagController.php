@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
@@ -13,7 +14,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::all(); 
+        return response()->json($tags); 
     }
 
     /**
@@ -21,7 +23,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('tags.create'); 
     }
 
     /**
@@ -29,7 +31,10 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $tag = Tag::create($validated);
+        return redirect()->route('tags.index')
+                         ->with('success', 'Tag created successfully.');
     }
 
     /**
@@ -37,7 +42,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        return view('tags.show', compact('tag'));
     }
 
     /**
@@ -45,7 +50,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return view('tags.edit', compact('tag'));
     }
 
     /**
@@ -53,7 +58,10 @@ class TagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        $validated = $request->validated();
+        $tag->update($validated); 
+        return redirect()->route('tags.index')
+                         ->with('success', 'Tag updated successfully.');
     }
 
     /**
@@ -61,6 +69,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete(); 
+        return redirect()->route('tags.index')
+                         ->with('success', 'Tag deleted successfully.');
     }
 }
