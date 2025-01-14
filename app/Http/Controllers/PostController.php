@@ -25,9 +25,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = auth()->user()->posts()->latest()->paginate();
+        $posts = auth()->user()->posts()->latest()->simplePaginate(10);
         return view('posts.index', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.
