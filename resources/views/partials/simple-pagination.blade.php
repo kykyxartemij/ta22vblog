@@ -1,27 +1,32 @@
 @if ($paginator->hasPages())
-    <div class="flex justify-center mt-4">
-        <div class="btn-group">
+    <nav>
+        <ul class="pagination">
+            {{-- First Page Link --}}
+            @if ($paginator->onFirstPage())
+                <button class="disabled join-item btn btn-outline">«</button>
+            @else
+                <a href="/?page=1"><button class="join-item btn btn-outline">«</button></a>
+            @endif
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <button class="btn btn-disabled" aria-disabled="true">
-                    @lang('pagination.previous')
-                </button>
+                <li class="disabled join-item btn btn-outline" aria-disabled="true"><span>@lang('pagination.previous')</span></li>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="btn">
-                    @lang('pagination.previous')
-                </a>
+                <li class="join-item btn btn-outline"><a href="{{ $paginator->previousPageUrl() }}" rel="prev">@lang('pagination.previous')</a></li>
             @endif
-
+            {{-- Current Page --}}
+            <button class="disabled join-item btn">{{$paginator->currentPage()}}</button>
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
-                <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="btn">
-                    @lang('pagination.next')
-                </a>
+                <li class="join-item btn btn-outline"><a href="{{ $paginator->nextPageUrl() }}" rel="next">@lang('pagination.next')</a></li>
             @else
-                <button class="btn btn-disabled" aria-disabled="true">
-                    @lang('pagination.next')
-                </button>
+                <li class="disabled join-item btn btn-outline" aria-disabled="true"><span>@lang('pagination.next')</span></li>
             @endif
-        </div>
-    </div>
+            {{-- Last Page Link --}}
+            @if ($paginator->hasMorePages())
+                <a href="/?page={{round(1000/16)}}"><button class="join-item btn btn-outline">»</button></a>
+            @else
+                <button class="disabled join-item btn btn-outline">»</button>
+            @endif
+        </ul>
+    </nav>
 @endif

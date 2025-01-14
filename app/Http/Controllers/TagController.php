@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class TagController extends Controller
 {
@@ -14,8 +15,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all(); 
-        return response()->json($tags); 
+        $tags = Tag::latest()->paginate(10);
+        return view('tags.index', compact('tags'));
     }
 
     /**
